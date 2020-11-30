@@ -43,28 +43,49 @@ class WordGame():
         print("* je de afkorting en mag je de volledige naam invoeren.              *")
         print("**********************************************************************")
 
-    def play(self): 
-        keep_playing = True
-        while keep_playing:
-            wordlist = WordList()
-            self.wordlist = wordlist.get_word_list()    
-            self.print_explanation()
-            while (len(self.wordlist) > 0): 
-                play_word = self.__get_word()
-                answer = input("({})  ==> {} : ".format(str(len(self.wordlist)),play_word[0]))
-                answerlist = answer.split(" ")
-                if len(answerlist) == 2: #check whether two words have been entered 
-                    afkorting = answerlist[0] 
-                    metaal = answerlist[1]
-                    if (afkorting == play_word[1]) and (metaal.lower() == play_word[2].lower()): 
-                        del self.wordlist[0]
-                    else:
-                        print("Helaas: de afkorting is \033[92m{}\033[0m  en het is \033[92m{}\033[0m".format(play_word[1], play_word[2]))
+    def afkortingen_leren(self): 
+        wordlist = WordList()
+        self.wordlist = wordlist.get_word_list()    
+        self.print_explanation()
+        while (len(self.wordlist) > 0): 
+            play_word = self.__get_word()
+            answer = input("({})  ==> {} : ".format(str(len(self.wordlist)),play_word[0]))
+            answerlist = answer.split(" ")
+            if len(answerlist) == 2: #check whether two words have been entered 
+                afkorting = answerlist[0] 
+                metaal = answerlist[1]
+                if (afkorting == play_word[1]) and (metaal.lower() == play_word[2].lower()): 
+                    del self.wordlist[0]
                 else:
-                    print("Geef de afkorting en metaal of niet-metaal.")
-            again = input("Lekker bezig!! Nog een keer oefenen (Y)?")
-            if not (again.lower() == "y"): 
-                keep_playing = False
+                    print("Helaas: de afkorting is \033[92m{}\033[0m  en het is \033[92m{}\033[0m".format(play_word[1], play_word[2]))
+            else:
+                print("Geef de afkorting en metaal of niet-metaal.")
+
+    def volledige_naam_leren(self): 
+        wordlist = WordList()
+        self.wordlist = wordlist.get_word_list()    
+        self.print_explanation()
+        while (len(self.wordlist) > 0): 
+            play_word = self.__get_word()
+            answer = input("({})  ==> {} : ".format(str(len(self.wordlist)),play_word[1]))
+            answerlist = answer.split(" ")
+            if len(answerlist) == 2: #check whether two words have been entered 
+                volledige_naam = answerlist[0] 
+                metaal = answerlist[1]
+                if (volledige_naam == play_word[0]) and (metaal.lower() == play_word[2].lower()): 
+                    del self.wordlist[0]
+                else:
+                    print("Helaas: de volledige naam is \033[92m{}\033[0m  en het is \033[92m{}\033[0m".format(play_word[0], play_word[2]))
+            else:
+                print("Geef de volledige naam en metaal of niet-metaal.")
+
 
 g = WordGame()
-g.play() 
+keep_playing = True
+while keep_playing:
+    g.afkortingen_leren()
+    g.volledige_naam_leren() 
+    again = input("Lekker bezig!! Nog een keer oefenen (Y)?")
+    if not (again.lower() == "y"): 
+        keep_playing = False
+
